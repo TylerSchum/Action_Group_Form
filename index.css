@@ -1,0 +1,93 @@
+body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 1em;
+  width: 100%;
+  height: 100%;
+}
+
+#action-group-container, #option-list {
+  width: 40%;
+}
+
+#action-group-container {
+  display: flex;
+  justify-content: center;
+}
+
+#action {
+  padding-right: 30px;
+}
+
+p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.list {
+  margin-top: 20px;
+}
+
+span {
+  font-weight: normal;
+}
+
+input[type="range"] {
+  width: 200px;
+}
+
+input {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#save {
+  margin-top: 30px;
+}
+
+select {
+  width: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input[type="checkbox"] {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+button.btn-success {
+  margin-right: 10px;
+}
+
+form {
+  width: 265px;
+}
+
+.opt {
+  padding-left: 40px;
+}
+
+#edit-name-btn {
+  margin-left: 20px;
+}
+
+@media (max-width: 660px) {
+  body {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  #action-group-container,
+  #option-list {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  #action-group-container,
+  #option-list {
+    margin: 50px;
+  }
+}
