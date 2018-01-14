@@ -1,4 +1,4 @@
-body {
+#action-modal-container {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -8,11 +8,13 @@ body {
   height: 100%;
 }
 
-#action-group-container,#option-list,#action-groups {
+#action-modal-container #action-group-container,
+#action-modal-container #option-list,
+#action-modal-container #action-groups {
   width: 30%;
 }
 
-.opt {
+#action-modal-container .opt {
   border: 1px solid #666666;
   border-radius: 15px;
   display: flex;
@@ -21,12 +23,13 @@ body {
   padding: 10px 10px 30px 10px;
 }
 
-.add-button {
+#action-modal-container .add-button {
   display: flex;
   flex-direction: row;
 }
 
-#action-group-container, #action-groups {
+#action-modal-container #action-group-container,
+#action-modal-container #action-groups {
   display: flex;
   justify-content: center;
 }
@@ -39,20 +42,20 @@ body {
   padding-right: 30px;
 }
 
-p {
+#action-modal-container p {
   margin: 0;
   font-weight: bold;
 }
 
-.list {
+#action-modal-container .list {
   margin-top: 20px;
 }
 
-span {
+#action-modal-container span {
   font-weight: normal;
 }
 
-input {
+#action-modal-container input {
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -61,22 +64,22 @@ input {
   margin-top: 30px;
 }
 
-select {
+#action-modal-container select {
   width: 100px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-input[type="checkbox"] {
+#action-modal-container input[type="checkbox"] {
   margin-left: 10px;
   margin-bottom: 20px;
 }
 
-button.btn-success {
+#action-modal-container button.btn-success {
   margin-right: 10px;
 }
 
-form {
+#action-modal-container form {
   width: 265px;
 }
 
@@ -91,11 +94,11 @@ form {
   text-align: center;
 }
 
-.large {
+#action-modal-container .large {
   font-size: 2em;
 }
 
-.btn-xs {
+#action-modal-container .btn-xs {
   margin-right: 10px;
 }
 
@@ -103,28 +106,28 @@ form {
   margin-top: 10px;
 }
 
-.btn-group-vertical {
+#action-modal-container .btn-group-vertical {
   width: 90%;
 }
 
-.btn-group {
+#action-modal-container .btn-group {
   width: 100%;
 }
 
-.btn-group-vertical>.btn-group>.btn {
+#action-modal-container .btn-group-vertical>.btn-group>.btn {
   width: 80%;
 }
 
-  .btn-group-vertical>.btn-group>.btn-danger {
-    width: 20%;
-  }
+#action-modal-container .btn-group-vertical>.btn-group>.btn-danger {
+  width: 20%;
+}
 
-.btn-group-vertical>.btn-group>.btn {
+#action-modal-container .btn-group-vertical>.btn-group>.btn {
   float: left;
 }
 
 @media (max-width: 660px) {
-  body {
+  #action-modal-container {
     flex-direction: column;
     padding: 0;
   }

@@ -40,7 +40,7 @@ let newObj = [{ name: "" }, { actionList: [] }];
 
 $("document").ready(function() {
   arr.forEach(arr => {
-    $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${arr[0].name} class="btn btn-default">${arr[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+    $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${arr[0].name} class="btn btn-default loads">${arr[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
   });
   $(".opt").hide();
   $("#sound").show();
@@ -82,7 +82,26 @@ $("document").ready(function() {
     arr.splice(index, 1);
   });
 
-  $(".btn-group-vertical").on('click', '.btn-default, .btn-primary', (e) => {
+  $("#defaults").click(() => {
+    newObj = [{ name: "" }, { actionList: [] }];
+    $(".list").hide();
+    $("email-list").html("<p>Email Addresses</p>");
+    $("phone-list").html("<p>Phone Numbers</p>");
+    $("phone-message").html("<p>Text Message</p>");
+    $("wiper-list").html("<p>Wipers</p>");
+    $("relay-list").html("<p>Relay</p>");
+    $("power-list").html("<p>Economy Mode</p>");
+    $("lamps-list").html("<p>Lamp</p>");
+    $("log-list").html("<p>Log Message</p>");
+    emptyFields();
+    $(".opt").hide();
+    $("#sound").show();
+    $(".btn-group-vertical button").removeClass("btn-primary").addClass("btn-default");
+    $(`#defaults`).removeClass("btn-default").addClass("btn-primary");
+    populatefields();
+  });
+
+  $(".btn-group-vertical").on('click', '.loads', (e) => {
     let name = (e.currentTarget.id) || this.id;
     let index = arr.findIndex(arr => arr[0].name === name);
     let Params = arr[index][1].actionList;
@@ -101,33 +120,19 @@ $("document").ready(function() {
     $("#sound").show();
     $("#name").val(name);
     populateName();
-
-    // const populateOnLoad = () => {
-    //   populateEconomy();
-    //   populatePhoneOnLoad();
-    //   populateLamps();
-    //   populateLog();
-    //   populateEmailOnLoad();
-
-    //   populatePhone();
-    //   populateRelay();
-    //   populateSound();
-    //   populateWipers();
-    // }
-
     if (Params.findIndex(obj => obj.phone) > -1) {
       let index = Params.findIndex(obj => obj.phone);
       $("#text-message").val(Params[index].phone.message);
       populatePhoneOnLoad();
     }
-    if (Params.findIndex(obj => obj.email)) {
+    if (Params.findIndex(obj => obj.email) > -1) {
       populateEmailOnLoad();
     }
-    if (Params.findIndex(obj => obj.sound) > -1) {
-      let index = Params.findIndex(obj => obj.sound);
-      let soundName = Params[index].sound.src.slice(0, -4);
+    if (Params.findIndex(obj => obj.audio) > -1) {
+      let index = Params.findIndex(obj => obj.audio);
+      let soundName = Params[index].audio.src.slice(0, -4);
       $("#sound-options").val(soundName);
-      $("#repeat").prop("checked", Params[index].sound.loop);
+      $("#repeat").prop("checked", Params[index].audio.loop);
       populateSound();
     }
     if (Params.findIndex(obj => obj.relay) > -1) {
@@ -175,13 +180,21 @@ $("document").ready(function() {
       $("#message").val(Params[index].log.message);
       populateLog();
     }
-    // populateOnLoad();
     $(".btn-group-vertical button").removeClass("btn-primary").addClass("btn-default");
     $(`#${name}`).removeClass("btn-default").addClass("btn-primary");
+    populatefields();
   });
 
-  $("#option-list").on("click", ".btn-xs", (e) => {
+  $("#phone-list").on("click", ".btn-xs", (e) => {
+    let val = e.currentTarget.parentElement.textContent;
+    let phoneIndex = newObj[1].actionList.findIndex(obj => obj.phone);
+    let removalIndex = newObj[1].actionList[phoneIndex].phone.phoneNumber.indexOf(val);
+    newObj[1].actionList[phoneIndex].phone.phoneNumber.splice(removalIndex, 1);
     e.currentTarget.parentNode.remove();
+    if (newObj[1].actionList[phoneIndex].phone.phoneNumber.length < 1) {
+      newObj[1].actionList.splice(phoneIndex, 1);
+      $("#phone-list").slideUp(300);
+    }
   });
 
   $("#wiper-repeat-input .glyphicon-minus").click(() => {
@@ -242,9 +255,16 @@ const populateEmailOnLoad = () => {
   let Params = arr[index][1].actionList;
   let emailIndex = Params.findIndex(obj => obj.email);
   if (Params[emailIndex].email.addresses.length > 0) {
+    newObj[1].actionList.push({
+      email: {
+        addresses: []
+      }
+    });
     $("#email-list").html(`<p>Email Addresses</p>`);
+    let newObjPhoneIndex = newObj[1].actionList.findIndex(obj => obj.email)
     Params[emailIndex].email.addresses.forEach((email) => {
       $("#email-list").slideDown(300).append(`<li><button class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>${email}</li>`);
+      newObj[1].actionList[newObjPhoneIndex].email.addresses.push(email);
     });
   }
 }
@@ -255,9 +275,17 @@ const populatePhoneOnLoad = () => {
   let Params = arr[index][1].actionList;
   let phoneIndex = Params.findIndex(obj => obj.phone);
   if (Params[phoneIndex].phone.phoneNumber.length > 0) {
+    newObj[1].actionList.push({
+      phone: {
+        phoneNumber: [],
+        message: ""
+      }
+    });
     $("#phone-list").html(`<p>Phone Numbers</p>`);
+    let newObjPhoneIndex = newObj[1].actionList.findIndex(obj => obj.phone)
     Params[phoneIndex].phone.phoneNumber.forEach((phone) => {
       $("#phone-list").slideDown(300).append(`<li><button class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>${phone}</li>`);
+      newObj[1].actionList[newObjPhoneIndex].phone.phoneNumber.push(phone);
     });
   }
 }
@@ -309,7 +337,7 @@ const populatePhone = () => {
         newObj[1].actionList.push({
           phone: {
             phoneNumber: [],
-            message: "default",
+            message: "default"
           }
         });
         let index = newObj[1].actionList.findIndex((obj) => obj.phone);
@@ -498,8 +526,15 @@ const populateName = () => {
 }
 
 const saveButton = () => {
-  arr.push(newObj);
-  $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${newObj[0].name} class="btn btn-default">${newObj[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+  let ObjName = newObj[0].name 
+  if (arr.findIndex(arr => arr[0].name === ObjName) > -1) {
+    let arrIndex = arr.findIndex(arr => arr[0].name === ObjName);
+    arr.splice(arrIndex, 1);
+    arr.push(newObj);
+  } else {
+    arr.push(newObj);
+    $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${newObj[0].name} class="btn btn-default loads">${newObj[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+  }
   newObj = [{ name: "" }, { actionList: [] }];
   $(".list").hide();
   $("email-list").html("<p>Email Addresses</p>");
