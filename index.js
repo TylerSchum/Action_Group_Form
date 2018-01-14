@@ -120,6 +120,9 @@ $("document").ready(function() {
       $("#text-message").val(Params[index].phone.message);
       populatePhoneOnLoad();
     }
+    if (Params.findIndex(obj => obj.email)) {
+      populateEmailOnLoad();
+    }
     if (Params.findIndex(obj => obj.sound) > -1) {
       let index = Params.findIndex(obj => obj.sound);
       let soundName = Params[index].sound.src.slice(0, -4);
