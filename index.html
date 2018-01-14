@@ -15,6 +15,11 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
+  <div id="action-groups">
+    <div class="btn-group-vertical" role="group" aria-label="...">
+      <button type="button" id="defaults" class="btn btn-primary">Default</button>
+    </div>
+  </div>
   <div id="action-group-container">
     <form onsubmit="return false;">
       <fieldset id="group-name">
@@ -46,36 +51,42 @@
         <label for="repeat">Repeat?</label>
         <input type="checkbox" name="repeat" id="repeat">
         <br />
-        <button class="btn btn-success" id="add-sound">
-          <i class="glyphicon glyphicon-plus"></i>
-        </button>
-        <button class="btn btn-danger" id="remove-sound">
-          <i class="glyphicon glyphicon-remove"></i>
-        </button>
+        <div class="add-button">
+          <button class="btn btn-success" id="add-economy">
+            <i class="glyphicon glyphicon-plus"></i>
+          </button>
+          <button class="btn btn-danger" id="remove-economy">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </div>
       </fieldset>
 
       <fieldset id="text" class="opt">
         <input type="tel" name="text-number" id="text-number" placeholder="555-555-5555">
         <textarea name="text-message" id="text-message" cols="30" rows="10" placeholder="Enter a text message here"></textarea>
         <br />
-        <button class="btn btn-success" id="add-phone">
-          <i class="glyphicon glyphicon-plus"></i>
-        </button>
-        <button class="btn btn-danger" id="remove-phone">
-          <i class="glyphicon glyphicon-remove"></i>
-        </button>
+        <div class="add-button">
+          <button class="btn btn-success" id="add-economy">
+            <i class="glyphicon glyphicon-plus"></i>
+          </button>
+          <button class="btn btn-danger" id="remove-economy">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </div>
       </fieldset>
     
 
       <fieldset id="email" class="opt">
         <input type="email" name="email-input" id="email-input" placeholder="Enter your e-mail">
         <br />
-        <button class="btn btn-success" id="add-email">
-          <i class="glyphicon glyphicon-plus"></i>
-        </button>
-        <button class="btn btn-danger" id="remove-email">
-          <i class="glyphicon glyphicon-remove"></i>
-        </button>
+        <div class="add-button">
+          <button class="btn btn-success" id="add-economy">
+            <i class="glyphicon glyphicon-plus"></i>
+          </button>
+          <button class="btn btn-danger" id="remove-economy">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </div>
       </fieldset>
 
       <fieldset id="relay" class="opt">
@@ -84,12 +95,14 @@
           <option value="off">Off</option>
         </select>
         <br />
-        <button class="btn btn-success" id="add-relay">
-          <i class="glyphicon glyphicon-plus"></i>
-        </button>
-        <button class="btn btn-danger" id="remove-relay">
-          <i class="glyphicon glyphicon-remove"></i>
-        </button>
+        <div class="add-button">
+          <button class="btn btn-success" id="add-economy">
+            <i class="glyphicon glyphicon-plus"></i>
+          </button>
+          <button class="btn btn-danger" id="remove-economy">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </div>
       </fieldset>
 
     <fieldset id="economy" class="opt">
@@ -98,12 +111,14 @@
         <option value="off">Economy Mode Off</option>
       </select>
       <br />
-      <button class="btn btn-success" id="add-economy">
-        <i class="glyphicon glyphicon-plus"></i>
-      </button>
-      <button class="btn btn-danger" id="remove-economy">
-        <i class="glyphicon glyphicon-remove"></i>
-      </button>
+      <div class="add-button">
+        <button class="btn btn-success" id="add-economy">
+          <i class="glyphicon glyphicon-plus"></i>
+        </button>
+        <button class="btn btn-danger" id="remove-economy">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </div>
     </fieldset>
 
     <fieldset id="lamps" class="opt">
@@ -112,20 +127,22 @@
         <option value="off">Turn Lamps Off</option>
       </select>
       <br />
-      <button class="btn btn-success" id="add-lamp">
-        <i class="glyphicon glyphicon-plus"></i>
-      </button>
-      <button class="btn btn-danger" id="remove-lamp">
-        <i class="glyphicon glyphicon-remove"></i>
-      </button>
+      <div class="add-button">
+        <button class="btn btn-success" id="add-economy">
+          <i class="glyphicon glyphicon-plus"></i>
+        </button>
+        <button class="btn btn-danger" id="remove-economy">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </div>
     </fieldset>
 
-<fieldset id="wiper" class="opt">
+    <fieldset id="wiper" class="opt">
       <label for="wiper-power">Start Wiper</label>
       <input type="checkbox" name="wiper-power" id="wiper-power" default="checked">
       <br />
       <label for="range">Number of Wiper Strokes</label>
-      <input type="range" name="wiper-repeat" id="wiper-repeat" min="1" step="1" max="10" value="1" list="wiper-range">
+      <!-- <input type="range" name="wiper-repeat" id="wiper-repeat" min="1" step="1" max="10" value="1" list="wiper-range">
       <datalist id="wiper-range">
         <option value="1" />
         <option value="2" />
@@ -137,14 +154,21 @@
         <option value="8" />
         <option value="9" />
         <option value="10" />
-      </datalist>
+      </datalist> -->
+      <div id="wiper-repeat-input">
+        <i class="glyphicon glyphicon-minus large"></i>
+        <input type="number" name="wiper-repeat" id="wiper-repeat" min="1" max="10" value="1">
+        <i class="glyphicon glyphicon-plus large"></i>
+      </div>
       <br />
-      <button class="btn btn-success" id="add-wiper">
-        <i class="glyphicon glyphicon-plus"></i>
-      </button>
-      <button class="btn btn-danger" id="remove-wiper">
-        <i class="glyphicon glyphicon-remove"></i>
-      </button>
+      <div class="add-button">
+        <button class="btn btn-success" id="add-economy">
+          <i class="glyphicon glyphicon-plus"></i>
+        </button>
+        <button class="btn btn-danger" id="remove-economy">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </div>
     </fieldset>
 
     <fieldset id="log" class="opt">
@@ -155,20 +179,20 @@
       <br>
       <textarea name="message" id="message" cols="30" rows="10"></textarea>
       <br />
-      <button class="btn btn-success" id="add-log">
-        <i class="glyphicon glyphicon-plus"></i>
-      </button>
-      <button class="btn btn-danger" id="remove-log">
-        <i class="glyphicon glyphicon-remove"></i>
-      </button>
+      <div class="add-button">
+        <button class="btn btn-success" id="add-economy">
+          <i class="glyphicon glyphicon-plus"></i>
+        </button>
+        <button class="btn btn-danger" id="remove-economy">
+          <i class="glyphicon glyphicon-remove"></i>
+        </button>
+      </div>
     </fieldset>
   </form>
 </div>
 
 <div id="option-list">
-  <div id="name-list" class="list">
-    <p>Name</p>
-  </div>
+  <div id="name-list" class="list"><p>Name</p></div>
   <div id="sound-list" class="list">
     <p>Sounds</p>
   </div>

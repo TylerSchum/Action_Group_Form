@@ -3,18 +3,37 @@ body {
   justify-content: space-between;
   flex-direction: row;
   padding: 1em;
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
   height: 100%;
 }
 
-#action-group-container, #option-list {
-  width: 40%;
+#action-group-container,#option-list,#action-groups {
+  width: 30%;
 }
 
-#action-group-container {
+.opt {
+  border: 1px solid #666666;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  padding: 10px 10px 30px 10px;
+}
+
+.add-button {
+  display: flex;
+  flex-direction: row;
+}
+
+#action-group-container, #action-groups {
   display: flex;
   justify-content: center;
 }
+
+/* #option-list {
+  text-align: center;
+} */
 
 #action {
   padding-right: 30px;
@@ -31,10 +50,6 @@ p {
 
 span {
   font-weight: normal;
-}
-
-input[type="range"] {
-  width: 200px;
 }
 
 input {
@@ -65,12 +80,47 @@ form {
   width: 265px;
 }
 
-.opt {
-  padding-left: 40px;
+#wiper-repeat-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-#edit-name-btn {
-  margin-left: 20px;
+#wiper-repeat {
+  text-align: center;
+}
+
+.large {
+  font-size: 2em;
+}
+
+.btn-xs {
+  margin-right: 10px;
+}
+
+#option-list li {
+  margin-top: 10px;
+}
+
+.btn-group-vertical {
+  width: 90%;
+}
+
+.btn-group {
+  width: 100%;
+}
+
+.btn-group-vertical>.btn-group>.btn {
+  width: 80%;
+}
+
+  .btn-group-vertical>.btn-group>.btn-danger {
+    width: 20%;
+  }
+
+.btn-group-vertical>.btn-group>.btn {
+  float: left;
 }
 
 @media (max-width: 660px) {
