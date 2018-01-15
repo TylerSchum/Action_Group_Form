@@ -63,6 +63,7 @@
 /* style for left column, containing previously made lists */
 #action-modal-container #action-groups {
   display: flex;
+  text-align: center;
   justify-content: center;
 }
 
@@ -101,9 +102,9 @@
 }
 
 /* styling for save button */
-#save {
+/* #save {
   margin-top: 30px;
-}
+} */
 
 /* styling for select elements */
 #action-modal-container select {

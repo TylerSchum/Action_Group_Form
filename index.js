@@ -7,10 +7,14 @@ let newObj = [{ name: "" }, { actionList: [] }];
 // function begins after dom load
 $("document").ready(function() {
   // fills the left column with buttons for each previously made list
+  $(".btn-group-vertical").html("");
   arr.forEach(arr => {
     // creation of buttons
     $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${arr[0].name} class="btn btn-default loads">${arr[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
   });
+  if (arr.length < 1) {
+    $(".btn-group-vertical").html("No Action Lists Found");
+  }
   // hide all fieldsets
   $(".opt").hide();
   // show sound fieldset
@@ -36,9 +40,29 @@ $("document").ready(function() {
   // this will remove the list from the column and from the overall array
   $(".btn-group-vertical").on("click", ".btn-group .btn-danger", (e) => {
     let siblingName = e.currentTarget.previousSibling.id;
+    let parentStatus = e.currentTarget.parentElement.parentNode.children.length;
     let index = arr.findIndex(arr => arr[0].name === siblingName);
     $(`.btn-group #${siblingName}`).parent().slideUp();
     arr.splice(index, 1);
+    // fills the left column with buttons for each previously made list
+    $(".btn-group-vertical").html("");
+    arr.forEach(arr => {
+      // creation of buttons
+      $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${arr[0].name} class="btn btn-default loads">${arr[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+    });
+    // hide all fieldsets
+    $(".opt").hide();
+    // show sound fieldset
+    $("#sound").show();
+    // hide all divs to display inputted info
+    $(".list").hide();
+    if ( arr.length < 1 ) {
+      $(".btn-group-vertical").html("No Action Lists Found");
+    }
+    // remove master array from local storage
+    localStorage.removeItem("actionGroups");
+    // add in new master array with new list
+    localStorage.setItem("actionGroups", JSON.stringify(arr));
   });
 
   // event listener for the clear fields button
@@ -508,43 +532,49 @@ const populateName = () => {
 
 // event listener for save button
 const saveButton = () => {
-  // find list name
-  let ObjName = newObj[0].name;
-  // check for the name in the list of previously made action groups
-  if (arr.findIndex(arr => arr[0].name === ObjName) > -1) {
-    // grab index of name matched array
-    let arrIndex = arr.findIndex(arr => arr[0].name === ObjName);
-    // remove the index of the previous array
-    arr.splice(arrIndex, 1);
-    // add in new array
-    arr.push(newObj);
+  if (newObj[0].name === "" | newObj[0].name === "undefined") {
   } else {
-    // add in new array
-    arr.push(newObj);
-    // create new button for the newly made list
-    $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${newObj[0].name} class="btn btn-default loads">${newObj[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+    if ($(".btn-group-vertical").html() === "No Action Lists Found") {
+      $(".btn-group-vertical").html("");
+    }
+    // find list name
+    let ObjName = newObj[0].name;
+    // check for the name in the list of previously made action groups
+    if (arr.findIndex(arr => arr[0].name === ObjName) > -1) {
+      // grab index of name matched array
+      let arrIndex = arr.findIndex(arr => arr[0].name === ObjName);
+      // remove the index of the previous array
+      arr.splice(arrIndex, 1);
+      // add in new array
+      arr.push(newObj);
+    } else {
+      // add in new array
+      arr.push(newObj);
+      // create new button for the newly made list
+      $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${newObj[0].name} class="btn btn-default loads">${newObj[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+    }
+    // clear out our creation array for new use
+    newObj = [{ name: "" }, { actionList: [] }];
+    // hide all display info
+    $(".list").hide();
+    // remove display info
+    $("email-list").html("<p>Email Addresses</p>");
+    $("phone-list").html("<p>Phone Numbers</p>");
+    $("phone-message").html("<p>Text Message</p>");
+    $("wiper-list").html("<p>Wipers</p>");
+    $("relay-list").html("<p>Relay</p>");
+    $("power-list").html("<p>Economy Mode</p>");
+    $("lamps-list").html("<p>Lamp</p>");
+    $("log-list").html("<p>Log Message</p>");
+    // remove values from form
+    emptyFields();
+    // hide all formfields
+    $(".opt").hide();
+    // display sound formfield
+    $("#sound").show();
+    // remove master array from local storage
+    localStorage.removeItem("actionGroups");
+    // add in new master array with new list
+    localStorage.setItem("actionGroups", JSON.stringify(arr));
   }
-  // clear out our creation array for new use
-  newObj = [{ name: "" }, { actionList: [] }];
-  // hide all display info
-  $(".list").hide();
-  // remove display info
-  $("email-list").html("<p>Email Addresses</p>");
-  $("phone-list").html("<p>Phone Numbers</p>");
-  $("phone-message").html("<p>Text Message</p>");
-  $("wiper-list").html("<p>Wipers</p>");
-  $("relay-list").html("<p>Relay</p>");
-  $("power-list").html("<p>Economy Mode</p>");
-  $("lamps-list").html("<p>Lamp</p>");
-  $("log-list").html("<p>Log Message</p>");
-  // remove values from form
-  emptyFields();
-  // hide all formfields
-  $(".opt").hide();
-  // display sound formfield
-  $("#sound").show();
-  // remove master array from local storage
-  localStorage.removeItem("actionGroups")
-  // add in new master array with new list
-  localStorage.setItem("actionGroups", JSON.stringify(arr));
 }
