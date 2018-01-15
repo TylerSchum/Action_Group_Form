@@ -1,3 +1,4 @@
+/* Main div containing entire Modal element */
 #action-modal-container {
   display: flex;
   justify-content: space-between;
@@ -8,6 +9,7 @@
   height: 100%;
 }
 
+/* Name input specific styling */
 #action-modal-container #group-name #name {
   font-size: 20px;
   width: 70%;
@@ -15,33 +17,33 @@
   line-height: 28px;
 }
 
-#action-modal-container #add-list {
-  margin-left: auto;
-  margin-right: auto;
-}
-
+/* Styling shared by each div column */
 #action-modal-container #action-group-container,
 #action-modal-container #option-list,
 #action-modal-container #action-groups {
   width: 30%;
 }
 
+/* styling for center div with all forms */
 #action-group-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
+/* styling for the form in the center  */
 #action-modal-container form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* style for select element that contains the list fo actions */
 #action-modal-container #action-list {
   width: 100%;
 }
 
+/* style for each fieldset within the center form */
 #action-modal-container .opt {
   border: 1px solid #666666;
   border-radius: 15px;
@@ -52,71 +54,81 @@
   padding: 10px 10px 30px 10px;
 }
 
+/* style for div that contains add button */
 #action-modal-container .add-button {
   display: flex;
   flex-direction: row;
 }
 
-#action-modal-container #action-group-container,
+/* style for left column, containing previously made lists */
 #action-modal-container #action-groups {
   display: flex;
   justify-content: center;
 }
 
-/* #option-list {
-  text-align: center;
-} */
-
+/* style for textareas */
 #action-modal-container textarea {
   border-color: #666;
   resize: none;
   overflow: auto;
 }
 
+/* style for fieldset containing the select element */
 #action {
   align-self: flex-start;
 }
 
+/* styling for paragraph elements in the right column */
 #action-modal-container p {
   margin: 0;
   font-weight: bold;
 }
 
+/* styling for each property in the right column */
 #action-modal-container .list {
   margin-top: 20px;
 }
 
+/* styling to avoid boldness in spans */
 #action-modal-container span {
   font-weight: normal;
 }
 
+/* styling for all inputs in the modal */
 #action-modal-container input {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
+/* styling for save button */
 #save {
   margin-top: 30px;
 }
 
+/* styling for select elements */
 #action-modal-container select {
   width: 100px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
+/* styling for checkboxes */
 #action-modal-container input[type="checkbox"] {
   margin-left: 10px;
   margin-bottom: 20px;
 }
 
+/* styling for green buttons */
 #action-modal-container button.btn-success {
   margin-right: 10px;
 }
 
+/* width setting for entire form in the center */
 #action-modal-container form {
   width: 265px;
 }
+
+
 
 #wiper-repeat-input {
   display: flex;

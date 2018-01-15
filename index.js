@@ -1,65 +1,24 @@
+// JSON call to fill in previously made action-lists
 let arr = JSON.parse(localStorage.getItem("actionGroups")) || [];
 
-// arr.forEach((obj, index, arr) => {
-//   $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${name} class="btn btn-default">${name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
-// });
-
-class OptionGroup {
-  constructor (name, soundName, soundRepeat, phoneNumber, textMessage, emails, relay, economy, lamps, wiperCount, wiper, log) {
-    this.name = name;
-    this.soundName = soundName;
-    this.soundRepeat = soundRepeat;
-    this.phoneNumber = phoneNumber;
-    this.textMessage = textMessage;
-    this.emails = emails;
-    this.relay = relay;
-    this.economy = economy;
-    this.wiper = wiper;
-    this.wiperCount = wiperCount;
-    this.log = log;
-    this.lamps = lamps;
-  }
-}
-
-// let newObj = {
-//   name: undefined,
-//   soundName: undefined,
-//   soundRepeat: undefined,
-//   phoneNumber: [],
-//   textMessage: undefined,
-//   emails: [],
-//   relay: undefined,
-//   economy: undefined,
-//   wiper: undefined,
-//   wiperCount: undefined,
-//   log: undefined,
-//   lamps: undefined
-// };
-
+// initial creation of the object model
 let newObj = [{ name: "" }, { actionList: [] }];
 
+// function begins after dom load
 $("document").ready(function() {
+  // fills the left column with buttons for each previously made list
   arr.forEach(arr => {
+    // creation of buttons
     $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${arr[0].name} class="btn btn-default loads">${arr[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
   });
+  // hide all fieldsets
   $(".opt").hide();
+  // show sound fieldset
   $("#sound").show();
+  // hide all divs to display inputted info
   $(".list").hide();
-  // $("#name").val(defaultParams.name);
-  // $("#text-message").val(defaultParams.textMessage);
-  // $("#sound-options").val(defaultParams.soundName);
-  // $("#repeat").prop("checked", defaultParams.soundRepeat);
-  // $("#relay-options").val("on");
-  // $("#power").val("on");
-  // $("#lamps-power").val("on");
-  // $("#wiper-power").prop("checked", defaultParams.wiper);
-  // $("#wiper-repeat").val(defaultParams.wiperCount);
-  // $("#log-check").prop("checked", "true");
-  // $("#message").val(defaultParams.log);
-  // populateOnLoad();
 
-  $("#group-name").slideDown(300);
-
+  // add event listener to change which fieldset is displayed based on the select element
   $("#action-list").change((event) => {
     let actionValue = $("#action-list").val();
     $(`.opt`).slideUp(300);
@@ -67,14 +26,14 @@ $("document").ready(function() {
     event.stopPropagation();
   });
 
+  // adds event listeners to each plus button in each fieldset
   populatefields();
 
-  $("#name-list").on('click', 'button', () => {
-    $("#group-name").slideDown(300).val($("#name-list li span").text());
-  });
-
+  // add event listener to save button
   $("#save").click(saveButton);
 
+  // add event listeners to each trash can button in the left side column list
+  // this will remove the list from the column and from the overall array
   $(".btn-group-vertical").on("click", ".btn-group .btn-danger", (e) => {
     let siblingName = e.currentTarget.previousSibling.id;
     let index = arr.findIndex(arr => arr[0].name === siblingName);
@@ -82,6 +41,8 @@ $("document").ready(function() {
     arr.splice(index, 1);
   });
 
+  // event listener for the clear fields button
+  // resets the current obj being made, all form values, and the display
   $("#defaults").click(() => {
     newObj = [{ name: "" }, { actionList: [] }];
     $(".list").hide();
@@ -101,6 +62,12 @@ $("document").ready(function() {
     populatefields();
   });
 
+  // add event listeners to each button that represents a list
+  // This will reset the current array, the form, and display
+  // then check for each piece of data
+  // then places that value into the form
+  // then fills the array and display
+  // then iterates through the phone and email data to fill there
   $(".btn-group-vertical").on('click', '.loads', (e) => {
     let name = (e.currentTarget.id) || this.id;
     let index = arr.findIndex(arr => arr[0].name === name);
@@ -185,6 +152,7 @@ $("document").ready(function() {
     populatefields();
   });
 
+  // event listeners for phone list to remove phone numbers
   $("#phone-list").on("click", ".btn-xs", (e) => {
     let val = e.currentTarget.parentElement.textContent;
     let phoneIndex = newObj[1].actionList.findIndex(obj => obj.phone);
@@ -197,6 +165,20 @@ $("document").ready(function() {
     }
   });
 
+  // event listeners for email list to remove addresses
+  $("#email-list").on("click", ".btn-xs", (e) => {
+    let val = e.currentTarget.parentElement.textContent;
+    let emailIndex = newObj[1].actionList.findIndex(obj => obj.email);
+    let removalIndex = newObj[1].actionList[emailIndex].email.addresses.indexOf(val);
+    newObj[1].actionList[emailIndex].email.addresses.splice(removalIndex, 1);
+    e.currentTarget.parentNode.remove();
+    if (newObj[1].actionList[emailIndex].email.addresses.length < 1) {
+      newObj[1].actionList.splice(emailIndex, 1);
+      $("#email-list").slideUp(300);
+    }
+  });
+
+  // event listener for the minus button on the wiper number input
   $("#wiper-repeat-input .glyphicon-minus").click(() => {
     let curValue = $("#wiper-repeat").val();
       if (curValue > 1) {
@@ -205,6 +187,7 @@ $("document").ready(function() {
       }
   });
 
+  // event listener for the add button on the wiper number input
   $("#wiper-repeat-input .glyphicon-plus").click(() => {
     let curValue = $("#wiper-repeat").val();
     if (curValue < 10) {
@@ -214,21 +197,7 @@ $("document").ready(function() {
   });
 });
 
-
-
-const populateOnLoad = () => {
-  populateEconomy();
-  populatePhoneOnLoad();
-  populateLamps();
-  populateLog();
-  populateEmailOnLoad();
-  
-  populatePhone();
-  populateRelay();
-  populateSound();
-  populateWipers();
-}
-
+// function for all add button event listeners
 const populatefields = () => {
   $("#add-email").click(populateEmail);
 
@@ -249,6 +218,7 @@ const populatefields = () => {
   $("#add-name").click(populateName);
 }
 
+// function populates email addresses from previously made lists
 const populateEmailOnLoad = () => {
   let name = $("#name").val();
   let index = arr.findIndex(arr => arr[0].name === name);
@@ -269,6 +239,7 @@ const populateEmailOnLoad = () => {
   }
 }
 
+// function populates phone numbers from previously made lists
 const populatePhoneOnLoad = () => {
   let name = $("#name").val();
   let index = arr.findIndex(arr => arr[0].name === name);
@@ -290,11 +261,7 @@ const populatePhoneOnLoad = () => {
   }
 }
 
-const populateNameOnLoad = () => {
-  let name = $("#name").val();
-  $("#name-list").slideDown(300).html(`<p>Name</p> <li><span>${name}</span></li>`);
-}
-
+// function to add email address on add click
 const populateEmail = () => {
   let email = $("#email-input").val();
   let emailCheck = /^[_\w\-]+(\.[_\w\-]+)*@[\w\-]+(\.[\w\-]+)*(\.[\D]{2,6})$/;
@@ -323,6 +290,7 @@ const populateEmail = () => {
   }
 }
 
+// function to add phone numbers and text message on add click
 const populatePhone = () => {
   let phone = $("#text-number").val();
   let message = $("#text-message").val();
@@ -363,6 +331,7 @@ const populatePhone = () => {
   }
 }
 
+// function to add sound and repeat check on add click
 const populateSound = () => {
   let sound = $("#sound-options").val();
   let soundRepeat = $("#repeat").prop("checked");
@@ -382,6 +351,7 @@ const populateSound = () => {
   }
 }
 
+// function to populate relay choices on add click
 const populateRelay = () => {
   let relay = $("#relay-options").val();
   $("#relay-list").slideDown(300).html(`<p>Relay</p><li>${relay}</li>`);
@@ -409,6 +379,7 @@ const populateRelay = () => {
   }
 }
 
+// function to populate Economy choice on add click
 const populateEconomy = () => {
   let power = $("#power").val();
   $("#power-list").slideDown(300).html(`<p>Economy Mode</p><li>${power}</li>`);
@@ -436,6 +407,7 @@ const populateEconomy = () => {
   }
 }
 
+// function to populate lamp choices on add click
 const populateLamps = () => {
   let lamp = $("#lamps-power").val();
   $("#lamps-list").slideDown(300).html(`<p>Lamp</p><li>${lamp}</li>`);
@@ -463,6 +435,7 @@ const populateLamps = () => {
   }
 }
 
+// function to empty out fields in the form
 const emptyFields = () => {
   $("#name").val("");
   $("#text-message").val("");
@@ -477,6 +450,7 @@ const emptyFields = () => {
   $("#message").val("");
 }
 
+// function to populate wipers choice and count on add click
 const populateWipers = () => {
   let wiperCheck = $("#wiper-power").prop("checked");
   let wiperCount = $("#wiper-repeat").val();
@@ -497,6 +471,7 @@ const populateWipers = () => {
   }
 }
 
+// function to populate log check and message
 const populateLog = () => {
   let logCheck = $("#log-check").prop("checked");
   let message = $("#message").val();
@@ -518,6 +493,7 @@ const populateLog = () => {
   $("#message").val("");
 }
 
+// function to populate name field
 const populateName = () => {
   let name = $("#name").val();
   name = name.replace(/\s+/g, '-');
@@ -525,18 +501,29 @@ const populateName = () => {
   newObj[0].name = name;
 }
 
+// event listener for save button
 const saveButton = () => {
-  let ObjName = newObj[0].name 
+  // find list name
+  let ObjName = newObj[0].name;
+  // check for the name in the list of previously made action groups
   if (arr.findIndex(arr => arr[0].name === ObjName) > -1) {
+    // grab index of name matched array
     let arrIndex = arr.findIndex(arr => arr[0].name === ObjName);
+    // remove the index of the previous array
     arr.splice(arrIndex, 1);
+    // add in new array
     arr.push(newObj);
   } else {
+    // add in new array
     arr.push(newObj);
+    // create new button for the newly made list
     $("#action-groups .btn-group-vertical").append(`<div class="btn-group" role="group"><button type="button" id=${newObj[0].name} class="btn btn-default loads">${newObj[0].name}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
   }
+  // clear out our creation array for new use
   newObj = [{ name: "" }, { actionList: [] }];
+  // hide all display info
   $(".list").hide();
+  // remove display info
   $("email-list").html("<p>Email Addresses</p>");
   $("phone-list").html("<p>Phone Numbers</p>");
   $("phone-message").html("<p>Text Message</p>");
@@ -545,9 +532,14 @@ const saveButton = () => {
   $("power-list").html("<p>Economy Mode</p>");
   $("lamps-list").html("<p>Lamp</p>");
   $("log-list").html("<p>Log Message</p>");
+  // remove values from form
   emptyFields();
+  // hide all formfields
   $(".opt").hide();
+  // display sound formfield
   $("#sound").show();
+  // remove master array from local storage
   localStorage.removeItem("actionGroups")
+  // add in new master array with new list
   localStorage.setItem("actionGroups", JSON.stringify(arr));
 }
