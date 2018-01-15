@@ -1,0 +1,280 @@
+/* Main div containing entire Modal element */
+
+#action-modal-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding: 1em;
+  width: 80%;
+  margin-left: 10%;
+  height: 100%;
+}
+
+
+/* Name input specific styling */
+
+#action-modal-container #group-name #name {
+  font-size: 20px;
+  width: 70%;
+  height: 28px;
+  line-height: 28px;
+}
+
+
+/* Styling shared by each div column */
+
+#action-modal-container #action-group-container,
+#action-modal-container #option-list,
+#action-modal-container #action-groups {
+  width: 30%;
+}
+
+
+/* styling for center div with all forms */
+
+#action-group-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+
+/* styling for the form in the center  */
+
+#action-modal-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+
+/* style for select element that contains the list fo actions */
+
+#action-modal-container #action-list {
+  width: 100%;
+}
+
+
+/* style for each fieldset within the center form */
+
+#action-modal-container .opt {
+  border: 1px solid #666666;
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 300px;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  padding: 10px 10px 30px 10px;
+}
+
+
+/* style for div that contains add button */
+
+#action-modal-container .add-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+
+/* style for left column, containing previously made lists */
+
+#action-modal-container #action-groups {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+
+/* style for textareas */
+
+#action-modal-container textarea {
+  border-color: #666;
+  resize: none;
+  overflow: auto;
+}
+
+
+/* style for fieldset containing the select element */
+
+#action {
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+}
+
+
+/* styling for paragraph elements in the right column */
+
+#action-modal-container p {
+  margin: 0;
+  font-weight: bold;
+}
+
+
+/* styling for each property in the right column */
+
+#action-modal-container .list {
+  margin-top: 20px;
+}
+
+
+/* styling to avoid boldness in spans */
+
+#action-modal-container span {
+  font-weight: normal;
+}
+
+
+/* styling for all inputs in the modal */
+
+#action-modal-container input {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+/* styling for save button */
+
+#save {
+  margin-top: 30px;
+}
+
+
+/* styling for select elements */
+
+#action-modal-container select {
+  width: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+/* styling for checkboxes */
+
+#action-modal-container input[type="checkbox"] {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+
+/* styling for green buttons */
+
+#action-modal-container button.btn-success {
+  margin-right: 10px;
+}
+
+
+/* width setting for entire form in the center */
+
+#action-modal-container form {
+  width: 265px;
+}
+
+#wiper-repeat-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+#action-modal-container input[type=number]::-webkit-inner-spin-button,
+#action-modal-container input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#wiper-repeat {
+  text-align: center;
+}
+
+#action-modal-container .large {
+  font-size: 2em;
+}
+
+#action-modal-container .btn-xs {
+  margin-right: 10px;
+}
+
+#option-list li {
+  margin-top: 10px;
+}
+
+#action-modal-container .btn-group-vertical {
+  width: 90%;
+}
+
+#action-modal-container .btn-group {
+  width: 100%;
+}
+
+#action-modal-container .btn-group-vertical>.btn-group>.btn {
+  width: 80%;
+}
+
+#action-modal-container .btn-group-vertical>.btn-group>.btn-danger {
+  width: 20%;
+}
+
+#action-modal-container .btn-group-vertical>.btn-group>.btn {
+  float: left;
+}
+
+@media (max-width: 660px) {
+  #action-modal-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: 0;
+  }
+  #action-group-container,
+  #option-list {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  #action-group-container,
+  #option-list {
+    margin: 50px;
+  }
+}
