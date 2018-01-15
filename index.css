@@ -67,6 +67,12 @@
   text-align: center;
 } */
 
+#action-modal-container textarea {
+  border-color: #666;
+  resize: none;
+  overflow: auto;
+}
+
 #action {
   align-self: flex-start;
 }
@@ -116,7 +122,13 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+
+#action-modal-container input[type=number]::-webkit-inner-spin-button,
+#action-modal-container input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #wiper-repeat {
