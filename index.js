@@ -496,9 +496,14 @@ const populateLog = () => {
 // function to populate name field
 const populateName = () => {
   let name = $("#name").val();
-  name = name.replace(/\s+/g, '-');
-  $("#name-list").slideDown(300).html(`<p>Name</p><li><span>${name}</span></li>`);
-  newObj[0].name = name;
+    if (name === "" || name === "undefined") {
+      $('#name').css({ 'background-color': 'rgb(250, 210, 210)' });
+    } else {
+      name = name.replace(/\s+/g, '-');
+      $('#name').css({ 'background-color': ''});
+      $("#name-list").slideDown(300).html(`<p>Name</p><li><span>${name}</span></li>`);
+      newObj[0].name = name;
+    }
 }
 
 // event listener for save button
