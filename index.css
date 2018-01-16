@@ -102,9 +102,9 @@
 }
 
 /* styling for save button */
-/* #save {
+#saveClear {
   margin-top: 30px;
-} */
+}
 
 /* styling for select elements */
 #action-modal-container select {
@@ -128,8 +128,6 @@
 #action-modal-container form {
   width: 265px;
 }
-
-
 
 #wiper-repeat-input {
   display: flex;

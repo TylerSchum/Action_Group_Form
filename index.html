@@ -12,7 +12,7 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="prefixedCSS.css">
 </head>
 <body>
   <div id="action-modal-container">
@@ -49,8 +49,10 @@
             <option value="chimes">Chimes</option>
             <option value="doh">Doh!</option>
           </select>
-          <label for="repeat">Repeat?</label>
-          <input type="checkbox" name="repeat" id="repeat">
+          <div>
+            <label for="repeat">Play Continuously?</label>
+            <input type="checkbox" name="repeat" id="repeat">
+          </div>
           <br />
           <div class="add-button">
             <button class="btn btn-success" id="add-sound">
@@ -91,6 +93,7 @@
         </fieldset>
 
         <fieldset id="relay" class="opt">
+          <label for="relay-options">Set Power Option for Relay</label>
           <select name="relay" id="relay-options" class="form-control">
             <option value="on">On</option>
             <option value="off">Off</option>
@@ -107,9 +110,10 @@
         </fieldset>
 
       <fieldset id="economy" class="opt">
+        <label for="power">Turn On Economy Mode?</label>
         <select name="power" id="power" class="form-control">
-          <option value="on">Economy Mode On</option>
-          <option value="off">Economy Mode Off</option>
+          <option value="on">On</option>
+          <option value="off">Off</option>
         </select>
         <br />
         <div class="add-button">
@@ -123,9 +127,10 @@
       </fieldset>
 
       <fieldset id="lamps" class="opt">
+        <label for="lamps-power">Turn on Lamp?</label>
         <select name="lamps-power" id="lamps-power" class="form-control">
-          <option value="on">Turn Lamps On</option>
-          <option value="off">Turn Lamps Off</option>
+          <option value="on">On</option>
+          <option value="off">Off</option>
         </select>
         <br />
         <div class="add-button">
@@ -139,8 +144,10 @@
       </fieldset>
 
       <fieldset id="wiper" class="opt">
-        <label for="wiper-power">Start Wiper</label>
-        <input type="checkbox" name="wiper-power" id="wiper-power" default="checked">
+        <div>
+          <label for="wiper-power">Start Wiper</label>
+          <input type="checkbox" name="wiper-power" id="wiper-power" default="checked">
+        </div>
         <br />
         <label for="range">Number of Wiper Strokes</label>
         <!-- <input type="range" name="wiper-repeat" id="wiper-repeat" min="1" step="1" max="10" value="1" list="wiper-range">
@@ -173,8 +180,10 @@
       </fieldset>
 
       <fieldset id="log" class="opt">
-        <label for="log">Log Event</label>
-        <input type="checkbox" name="log-check" id="log-check">
+        <div>
+          <label for="log">Log Event?</label>
+          <input type="checkbox" name="log-check" id="log-check">
+        </div>
         <br>
         <label for="message">Add Custom Message</label>
         <br>
