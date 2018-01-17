@@ -1,7 +1,7 @@
 /* Main div containing entire Modal element */
 #action-modal-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: row;
   padding: 1em;
   width: 100%;
@@ -27,8 +27,7 @@
 /* styling for center div with all forms */
 #action-group-container {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
 }
 
 /* styling for the form in the center  */
