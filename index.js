@@ -279,11 +279,11 @@ const populatePhoneOnLoad = () => {
       }
     });
     $("#phone-list").html(`<p>Phone Numbers</p>`);
-    let newObjPhoneIndex = newObj[1].actionList.findIndex(obj => obj.phone)
+    let newObjPhoneIndex = newObj[1].actionList.findIndex(obj => obj.phone);
     Params[phoneIndex].phone.phoneNumber.forEach((phone) => {
       $("#phone-list").slideDown(300).append(`<li><button class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></button>${phone.number}</li>`);
       newObj[1].actionList[newObjPhoneIndex].phone.phoneNumber.push({
-        number: phone
+        number: phone.number
       });
     });
     if (Params[phoneIndex].phone.message.length > 0) {
@@ -337,7 +337,7 @@ const populatePhone = () => {
         newObj[1].actionList.push({
           phone: {
             phoneNumber: [],
-            message: "default"
+            message: "Default"
           }
         });
         let index = newObj[1].actionList.findIndex((obj) => obj.phone);
@@ -361,7 +361,14 @@ const populatePhone = () => {
     if (index > -1) {
       newObj[1].actionList[index].phone.message = message;
     }
-    $("#text-message").val("")
+    $("#text-message").val("Default")
+  } else {
+    $("#phone-message").slideDown(300).html(`<p>Text Message</p><li>Default</li>`);
+    let index = newObj[1].actionList.findIndex((obj) => obj.phone);
+    if (index > -1) {
+      newObj[1].actionList[index].phone.message = "Default";
+    }
+    $("#text-message").val("Default")
   }
 }
 
@@ -472,7 +479,7 @@ const populateLamps = () => {
 // function to empty out fields in the form
 const emptyFields = () => {
   $("#name").val("");
-  $("#text-message").val("");
+  $("#text-message").val("Default");
   $("#sound-options").val("buzzer");
   $("#repeat").prop("checked", false);
   $("#relay-options").val("on");
@@ -579,8 +586,6 @@ const saveButton = () => {
     $("#power-list").html("<p>Economy Mode</p>");
     $("#lamps-list").html("<p>Lamp</p>");
     $("#log-list").html("<p>Log Message</p>");
-    nameIndex = 0;
-    addressIndex = 0;
     // remove values from form
     emptyFields();
     // hide all formfields
