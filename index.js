@@ -113,7 +113,7 @@ $("document").ready(function() {
     populateName();
     if (Params.findIndex(obj => obj.phone) > -1) {
       let index = Params.findIndex(obj => obj.phone);
-      $("#text-message").val(Params[index].phone.message);
+      $("#text-message").val(decodeURI(Params[index].phone.message));
       populatePhoneOnLoad();
     }
     if (Params.findIndex(obj => obj.email) > -1) {
@@ -129,7 +129,7 @@ $("document").ready(function() {
     if (Params.findIndex(obj => obj.relay) > -1) {
       let index = Params.findIndex(obj => obj.relay);
       let truthy;
-      if (Params[index].relay.value) {
+      if (Params[index].relay.value === "true") {
         truthy = "on";
       } else {
         truthy = "off";
@@ -140,7 +140,7 @@ $("document").ready(function() {
     if (Params.findIndex(obj => obj.economy) > -1) {
       let index = Params.findIndex(obj => obj.economy);
       let truthy;
-      if (Params[index].economy.value) {
+      if (Params[index].economy.value === "true") {
         truthy = "on";
       } else {
         truthy = "off";
@@ -157,7 +157,7 @@ $("document").ready(function() {
     if (Params.findIndex(obj => obj.lamps) > -1) {
       let index = Params.findIndex(obj => obj.lamps);
       let truthy;
-      if (Params[index].lamps.value) {
+      if (Params[index].lamps.value === "true") {
         truthy = "on";
       } else {
         truthy = "off";
@@ -186,6 +186,7 @@ $("document").ready(function() {
     if (newObj[1].actionList[phoneIndex].phone.phoneNumber.length < 1) {
       newObj[1].actionList.splice(phoneIndex, 1);
       $("#phone-list").slideUp(300);
+      $("#phone-message").slideUp(300);
     }
   });
 
@@ -355,7 +356,7 @@ const populatePhone = () => {
     if (index > -1) {
       newObj[1].actionList[index].phone.message = message;
     } else {
-
+      
     }
     $("#text-message").val("")
   }
@@ -376,7 +377,7 @@ const populateSound = () => {
     );
   } else {
     let index = newObj[1].actionList.findIndex(obj => obj.audio);
-    newObj[1].actionList[index].audio.src = `${sound}.wave`;
+    newObj[1].actionList[index].audio.src = `${sound}.wav`;
     newObj[1].actionList[index].audio.loop = soundRepeat;
   }
 }
