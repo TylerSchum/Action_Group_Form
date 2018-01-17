@@ -108,7 +108,8 @@ $("document").ready(function() {
     $("log-list").html("<p>Log Message</p>");
     emptyFields();
     $(".opt").hide();
-    $("#sound").show();
+    $("#sound").slideDown(300);
+    $("#action-list").val("sound");
     $("#name").val(decodeURI(name));
     populateName();
     if (Params.findIndex(obj => obj.phone) > -1) {
@@ -168,7 +169,7 @@ $("document").ready(function() {
     if (Params.findIndex(obj => obj.log) > -1) {
       let index = Params.findIndex(obj => obj.log);
       $("#log-check").prop("checked", Params[index].log.value);
-      $("#message").val(Params[index].log.message);
+      $("#message").val(decodeURI(Params[index].log.message));
       populateLog();
     }
     $(".btn-group-vertical button").removeClass("btn-primary").addClass("btn-default");
@@ -285,6 +286,10 @@ const populatePhoneOnLoad = () => {
         number: phone
       });
     });
+    if (Params[phoneIndex].phone.message.length > 0) {
+      newObj[1].actionList[newObjPhoneIndex].phone.message = encodeURI($("#text-message").val());
+      $("#phone-message").slideDown(300).html(`<p>Text Message</p><li>${decodeURI(newObj[1].actionList[newObjPhoneIndex].phone.message)}</li>`);
+    }
   }
 }
 
@@ -355,8 +360,6 @@ const populatePhone = () => {
     let index = newObj[1].actionList.findIndex((obj) => obj.phone);
     if (index > -1) {
       newObj[1].actionList[index].phone.message = message;
-    } else {
-      
     }
     $("#text-message").val("")
   }
@@ -518,7 +521,7 @@ const populateLog = () => {
     } else {
       let index = newObj.findIndex(obj => obj.log);
       newObj[1].actionList[index].log.value = logCheck;
-      newObj[1].actionList[index].log.message = message;
+      newObj[1].actionList[index].log.message = decodeURI(message);
     }
   }
   $("#message").val("");
