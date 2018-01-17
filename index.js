@@ -322,13 +322,30 @@ const populateEmail = () => {
   }
 }
 
+const formatPhone = (number) => {
+  let startNumber = number;
+  //validate number
+  if (!/^1?[\-\. ]?\(?(\d{3})\)?[\-\. ]?\d{3}[\-\. ]?\d{4}$/.test(startNumber)) return false;
+  //remove 1 if it's there to remove complication
+  if (startNumber[0] == 1) startNumber = startNumber.slice(1);
+  //remove any characters except for the digits
+  let strippedNumber = startNumber.replace(/\D/g, '');
+  //currently returns format: 8885550000
+  strippedNumber = "+1" + strippedNumber;
+  // adds +1 to the beginning as per e164
+  return strippedNumber;
+};
+
+
+
+
 // function to add phone numbers and text message on add click
 const populatePhone = () => {
-  let phone = $("#text-number").val();
+  let vanillaPhone = $("#text-number").val();
+  let phone = formatPhone($("#text-number").val());
   let message = encodeURI($("#text-message").val());
-  let phoneCheck = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
   if (!($("#phone-list").html().includes(phone))) {
-    if (phoneCheck.test(phone) === false) {
+    if (formatPhone(vanillaPhone) === false) {
       $('#text-number').css({ 'background-color': 'rgb(250, 210, 210)' });
     } else {
       $('#text-number').css({ 'background-color': '' });
