@@ -42,6 +42,29 @@ $("document").ready(function() {
     let parentStatus = e.currentTarget.parentElement.parentNode.children.length;
     let index = arr.findIndex(arr => arr[0].name.codeName === siblingName);
     $(this).parent().slideUp();
+    if (arr[index][0].name.codeName === newObj[0].name.codeName) {
+      newObj = [{
+        name: ""
+      }, {
+        actionList: []
+      }];
+      $(".list").slideUp(300);
+      $("#email-list").html("<p>Email Addresses</p>");
+      $("#phone-list").html("<p>Phone Numbers</p>");
+      $("#phone-message").html("<p>Text Message</p>");
+      $("#wiper-list").html("<p>Wipers</p>");
+      $("#relay-list").html("<p>Relay</p>");
+      $("#power-list").html("<p>Economy Mode</p>");
+      $("#lamps-list").html("<p>Lamp</p>");
+      $("#log-list").html("<p>Log Message</p>");
+      emptyFields();
+      $(".opt").hide();
+      $("#sound").show();
+      $("#action-list").val("sound");
+      $(".btn-group-vertical button").removeClass("btn-primary").addClass("btn-default");
+      $(`#defaults`).removeClass("btn-default").addClass("btn-primary");
+      populatefields();
+    }
     arr.splice(index, 1);
     // fills the left column with buttons for each previously made list
     $(".btn-group-vertical").html("");
@@ -378,7 +401,7 @@ const populatePhone = () => {
     if (index > -1) {
       newObj[1].actionList[index].phone.message = message;
     }
-    $("#text-message").val("Default")
+    $("#text-message").val(decodeURI(message))
   } else {
     $("#phone-message").slideDown(300).html(`<p>Text Message</p><li>Default</li>`);
     let index = newObj[1].actionList.findIndex((obj) => obj.phone);
@@ -532,23 +555,23 @@ const populateWipers = () => {
 // function to populate log check and message
 const populateLog = () => {
   let logCheck = $("#log-check").prop("checked");
-  let message = encodeURI($("#message").val());
+  let logMessage = encodeURI($("#message").val());
   if (logCheck) {
-    $("#log-list").slideDown(300).html(`<p>Log Message</p><li>${decodeURI(message)}</li>`);
+    $("#log-list").slideDown(300).html(`<p>Log Message</p><li>${decodeURI(logMessage)}</li>`);
     if (newObj[1].actionList.findIndex(obj => obj.log) < 0 ) {
       newObj[1].actionList.push({
         log: {
           value: logCheck,
-          message: message
+          message: logMessage
         }
       });
     } else {
       let index = newObj.findIndex(obj => obj.log);
       newObj[1].actionList[index].log.value = logCheck;
-      newObj[1].actionList[index].log.message = decodeURI(message);
+      newObj[1].actionList[index].log.message = logMessage;
     }
   }
-  $("#message").val("");
+  $("#message").val(logMessage);
 }
 
 // function to populate name field
