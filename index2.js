@@ -1,15 +1,66 @@
+// dictionary of magical strings
+const HTML_ELEMENTS = {
+  containers: {
+    actionGroups: "#action-groups .btn-group-vertical",
+    actionLists: "#option-list .btn-group-vertical",
+    actions: "#action-group-container",
+    actionForms: "#action-group-container .opt"
+  },
+  buttons: {
+    addgroup: "#action-groups #add-name",
+    all: ".btn",
+    groups: ".btn-default",
+    currentGroup: ".btn-primary",
+    deleteGroups: ".btn-danger",
+    addAction: ".btn-success",
+    actions: ".btn-default",
+    deleteAction: "#option-list .btn-group-vertical .btn-danger",
+    saveAction: "#action-group-container .opt .btn-success"
+  },
+  staticInputs: {
+    name: "#action-groups #name",
+    select: "#action-list",
+  },
+  generated: {
+    actionChoice: `<select name="action-list" id="action-list" value="sound" class="form-control">
+        <option value="sound">Sound</option>
+        <option value="text">Text</option>
+        <option value="email">Email</option>
+        <option value="relay">Relay</option>
+        <option value="economy">Economy</option>
+        <option value="wiper">Wiper</option>
+        <option value="log">Log</option>
+        <option value="lamps">Lamps</option>
+      </select>`
+  },
+  formTypes: {
+    sound: "sound",
+    text: "text",
+    email: "email",
+    relay: "relay",
+    economy: "economy",
+    lamps: "lamps",
+    wiper: "wiper",
+    log: "log"
+  }
+}
+
 // Class to create a completely new Action Group
 // to be stored in the list of Action Names
 // to be used as references by sharing the same name
 class ActionListName {
   constructor(name) {
-    this.name = encodeURI(name);
+    this.name = name;
+    this.container = HTML_ELEMENTS.containers.actionGroups;
   }
-  getActionListCodeName() {
+  get actionListCodeName() {
     return this.name;
   }
-  getActionListCommonName() {
+  get actionListCommonName() {
     return decodeURI(this.name);
+  }
+  appendButtons() {
+    $(this.container).append(`<div class="btn-group" role="group"><button type="button" data-id="${this.actionListCodeName}" class="btn btn-default loads">${this.actionListCommonName}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
   }
 }
 
@@ -23,40 +74,43 @@ class ActionList {
   addNewAction(action) {
     this.actionList.push(action);
   }
-  getActions() {
+  get actions() {
     return this.actionList;
   }
-  getActionListCodeName() {
+  get actionListCodeName() {
     return this.name
   }
-  getActionListCommonName() {
+  get actionListCommonName() {
     return decodeURI(this.name);
   }
-  getActionListLength() {
+  get actionListLength() {
     return this.actionList.length;
   }
 }
 
 // class to create an action to be stored in the
 // action list array
-class Action {
-  constructor(dataType, data) {
-    this.dataType = dataType;
-    this.data = data;
-  }
-  getAction() {
-    return this.data;
-  }
-  getDataType() {
-    return this.dataType;
-  } 
-}
+// class Action {
+//   constructor(dataType, data) {
+//     this.dataType = dataType;
+//     this.data = data;
+//   }
+//   getAction() {
+//     return this.data;
+//   }
+//   getDataType() {
+//     return this.dataType;
+//   } 
+// }
 
 class economy {
   constructor(setting, display, dataType) {
     this.dataType = dataType;
     this.setting = setting;
     this.display = display;
+  }
+  get commonName() {
+    return this.display;
   }
 }
 
@@ -118,52 +172,6 @@ class wiper {
   }
 }
 
-// dictionary of magical strings
-const HTML_ELEMENTS = {
-  containers: {
-    actionGroups: "#action-groups .btn-group-vertical",
-    actionLists: "#option-list .btn-group-vertical",
-    actions: "#action-group-container",
-    actionForms: "#action-group-container .opt"
-  },
-  buttons: {
-    addgroup: "#action-groups #add-name",
-    groups: ".btn-default",
-    currentGroup: ".btn-primary",
-    deleteGroups: ".btn-danger",
-    addAction: ".btn-success",
-    actions: ".btn-default",
-    deleteAction: "#option-list .btn-group-vertical .btn-danger",
-    saveAction: "#action-group-container .opt .btn-success"
-  },
-  staticInputs: {
-    name: "#action-groups #name",
-    select: "#action-list",
-  },
-  generated: {
-    actionChoice: `<select name="action-list" id="action-list" value="sound" class="form-control">
-        <option value="sound">Sound</option>
-        <option value="text">Text</option>
-        <option value="email">Email</option>
-        <option value="relay">Relay</option>
-        <option value="economy">Economy</option>
-        <option value="wiper">Wiper</option>
-        <option value="log">Log</option>
-        <option value="lamps">Lamps</option>
-      </select>`
-  },
-  formTypes: {
-    sound: "sound",
-    text: "text",
-    email: "email",
-    relay: "relay",
-    economy: "economy",
-    lamps: "lamps",
-    wiper: "wiper",
-    log: "log"
-  }
-}
-
 const EventHandlers = {
   // add name
   addName: function() {
@@ -179,7 +187,8 @@ const EventHandlers = {
         removeGroup(name);
       }
       createGroup(name);
-      EventHandlers.appendButtons(name, HTML_ELEMENTS.containers.actionGroups);
+      debugger;
+      ACTION_LIST_NAME[getIndex(name)].appendButtons();
     }
   },
   addSelect: function() {
@@ -188,14 +197,8 @@ const EventHandlers = {
       if ($(HTML_ELEMENTS.containers.actionLists).html().includes("No Action Lists Found")) {
         $(HTML_ELEMENTS.containers.actionLists).html("");
       }
-      EventHandlers.appendSelect(HTML_ELEMENTS.containers.actionLists);
+      $(HTML_ELEMENTS.containers.actionLists).append(HTML_ELEMENTS.generated.actionChoice);
     }
-  },
-  appendButtons: function(name, container) {
-    $(container).append(`<div class="btn-group" role="group"><button type="button" data-id="${name}" class="btn btn-default loads">${decodeURI(name)}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
-  },
-  appendSelect: function(container) {
-    $(container).append(HTML_ELEMENTS.generated.actionChoice);
   },
   removeGroupButton: function() {
     let name = $(this).prev().attr("data-id");
@@ -210,9 +213,7 @@ const EventHandlers = {
       $(HTML_ELEMENTS.containers.actionGroups).html("");
     }
     ACTION_LIST_NAME.forEach(obj => {
-      let codeName = obj.getActionListCodeName();
-      let commonName = obj.getActionListCommonName();
-      $(HTML_ELEMENTS.containers.actionGroups).append(`<div class="btn-group" role="group"><button type="button" data-id="${codeName}" class="btn btn-default loads">${commonName}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
+      obj.appendButtons();
     });
   },
   displayForm: function() {
@@ -222,10 +223,13 @@ const EventHandlers = {
   },
   populateLists: function() {
     let name = $(this).attr("data-id");
-    getIndex(name);
-    ACTION_LIST.forEach(obj => {
-      let dataType = obj.getDataType();
-      let commonName = `${dataType} - ${obj.data[1]}`
+    let index = getIndex(name);
+    $(`${HTML_ELEMENTS.containers.actionGroups} ${HTML_ELEMENTS.buttons.all}`).removeClass("btn-primary").addClass("btn-default");
+    $(this).removeClass("btn-default").addClass("btn-primary");
+    $(HTML_ELEMENTS.containers.actionLists).html("");
+    ACTION_LIST[index].actionList.forEach(obj => {
+      let dataType = obj.dataType;
+      let commonName = obj.display;
       // let commonName = obj.getActionLis();
       $(HTML_ELEMENTS.containers.actionLists).append(`<div class="btn-group" role="group"><button type="button" data-id="${dataType}" class="btn btn-default loads">${commonName}</button><button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button></div>`);
     });
@@ -236,58 +240,71 @@ const EventHandlers = {
     let selectedGroup = $(`${HTML_ELEMENTS.containers.actionGroups} ${HTML_ELEMENTS.buttons.currentGroup}`);
     let groupIndex = getIndex(selectedGroup.attr("data-id"));
     const data = [];
+    let display;
+    let setting;
+    let message;
+    let file;
+    let number;
     switch (dataType) {
       case HTML_ELEMENTS.formTypes.economy:
-        let display = `${dataType.slice(0,1) + dataType.slice(1,dataType.length)} - ${input[0].value.slice(0, 1).toUpperCase() + input[0].slice(1, input[0].length)}`;
-        let setting;
-        input[0].value === "on" ? setting = true : setting = false;
+        display = `${dataType.slice(0,1) + dataType.slice(1,dataType.length)} - ${inputArray[0].value.slice(0, 1).toUpperCase() + inputArray[0].slice(1, inputArray[0].length)}`;
+        inputArray[0].value === "on" ? setting = true : setting = false;
         ACTION_LIST[groupIndex].actionList.push(new economy(setting, display, dataType));
         break;
     
       case HTML_ELEMENTS.formTypes.email:
-        let address = input[0].value;
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${address}`;
+        debugger;
+        let address = inputArray[0].value;
+        let emailCheck = /^[_\w\-]+(\.[_\w\-]+)*@[\w\-]+(\.[\w\-]+)*(\.[\D]{2,6})$/;
+        if (!emailCheck.test(address)) {
+          $('#email-input').css({ 'background-color': 'rgb(250, 210, 210)' });
+          break;
+        } else {
+          $("#email-input").css({ 'background-color': ''});
+        }
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${address}`;
         ACTION_LIST[groupIndex].actionList.push(new email(address, display, dataType));
         break;
 
       case HTML_ELEMENTS.formTypes.lamps:
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${input[0].value.slice(0, 1).toUpperCase() + input[0].slice(1, input[0].length)}`;
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${inputArray[0].value.slice(0, 1).toUpperCase() + inputArray[0].slice(1, inputArray[0].length)}`;
         let temp;
-        input[0].value === "on" ? temp = true : temp = false;
+        inputArray[0].value === "on" ? temp = true : temp = false;
         ACTION_LIST[groupIndex].actionList.push(new lamps(setting, display, dataType));
         break;
 
       case HTML_ELEMENTS.formTypes.log:
-        let message = encodeURI(input[1].value);
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${decodeURI(input[0]).slice(0, 10)}`;
+        let message = encodeURI(inputArray[1].value);
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${decodeURI(inputArray[0]).slice(0, 10)}`;
         let shortMessage = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${message.slice(0,10)}...`;
         ACTION_LIST[groupIndex].actionList.push(new log(message, display, dataType));
         break;
 
       case HTML_ELEMENTS.formTypes.relay:
-        let setting;
-        input[0].value === on ? setting = true : setting = false;
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${input[0].value.slice(0, 1).toUpperCase() + input[0].slice(1, input[0].length)}`;
+        inputArray[0].value === "on" ? setting = true : setting = false;
+        debugger;
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${inputArray[0].value.slice(0, 1).toUpperCase() + inputArray[0].value.slice(1, inputArray[0].value.length)}`;
+        debugger;
         ACTION_LIST[groupIndex].actionList.push(new relay(setting, display, dataType));
         break;
 
       case HTML_ELEMENTS.formTypes.sound:
-        let file = input[0].value;
-        let setting = input[1].checked;
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${input[0].value.slice(0, 1).toUpperCase() + input[0].slice(1, input[0].length)}`;
+        file = inputArray[0].value;
+        setting = inputArray[1].checked;
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${inputArray[0].value.slice(0, 1).toUpperCase() + inputArray[0].slice(1, inputArray[0].length)}`;
         ACTION_LIST[groupIndex].actionList.push(new sound(file, setting, display, dataType));
         break;
 
       case HTML_ELEMENTS.formTypes.text:
-        let number = formatPhone(input[0].value);
-        let message = encodeURI(input[1].value);
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${number}`;
+        number = formatPhone(inputArray[0].value);
+        message = encodeURI(inputArray[1].value);
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${number}`;
         ACTION_LIST[groupIndex].actionList.push(new text(number, message, display, dataType));
         break;
 
       case HTML_ELEMENTS.formTypes.wiper:
-        let count = input[0].value;
-        let display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${count} strokes`;
+        let count = inputArray[0].value;
+        display = `${dataType.slice(0, 1) + dataType.slice(1, dataType.length)} - ${count} strokes`;
         break;
 
       default:
@@ -297,6 +314,7 @@ const EventHandlers = {
     // let selectedGroup = $(`${HTML_ELEMENTS.containers.actionGroups} ${HTML_ELEMENTS.buttons.currentGroup}`);
     // let groupIndex = getIndex(selectedGroup.attr("data-id"));
     // ACTION_LIST[groupIndex].actionList.push(newAction);
+    EventHandlers.populateLists.call($(`${HTML_ELEMENTS.containers.actionGroups} ${HTML_ELEMENTS.buttons.currentGroup}`));
   }
 }
   //add new action
@@ -348,8 +366,7 @@ const ACTION_LIST = [];
 
 // -----testing purposes-----
 createGroup("Tyler");
-let array = [{ sound: "buzzer" }, { repeat: "true" }];
-let action = new Action("sound", array);
+let action = new sound("buzzer", "continuous", "Buzzer - Continuous", "sound");
 ACTION_LIST[getIndex("Tyler")].addNewAction(action);
 debugger;
   // --------------------------
